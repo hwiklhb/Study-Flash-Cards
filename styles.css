@@ -1,0 +1,13 @@
+
+:root{--bg:#f6fbff;--card:#fff;--accent:#3399FF}
+*{box-sizing:border-box}
+body{font-family:Inter,system-ui,Arial;margin:0;background:var(--bg);color:#111}
+header{padding:1rem;background:linear-gradient(90deg,var(--accent),#8A2BE2);color:#fff}
+.container{max-width:900px;margin:2rem auto;padding:1rem;display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.deck-list{display:flex;flex-direction:column;gap:0.5rem}
+.deck{background:var(--card);padding:0.75rem;border-radius:8px;box-shadow:0 2px 6px rgba(0,0,0,0.06);cursor:pointer}
+.flashcard{height:220px;border-radius:12px;background:var(--card);display:flex;align-items:center;justify-content:center;font-size:1.15rem;box-shadow:0 6px 18px rgba(0,0,0,0.06);cursor:pointer;padding:1rem;text-align:center}
+.controls{margin-top:0.75rem;display:flex;gap:0.5rem;flex-wrap:wrap}
+.btn{background:var(--accent);border:none;color:#fff;padding:0.5rem 0.75rem;border-radius:8px;cursor:pointer}
+.btn.muted{background:#ddd;color:#111}
+@media(max-width:800px){.container{grid-template-columns:1fr}}
