@@ -47,7 +47,7 @@ Open a Pull Request to the main repository
 🧑‍💻 Contribution Guidelines
 
 Each feature or bug should be linked to an open issue
-If you want to implement a new feature then open a pull request and we will assign the issue to you
+If you want to implement a new feature then create a new issue under issue tab and we will assign the issue to you
 
 Follow the code style provided in starter files
 
