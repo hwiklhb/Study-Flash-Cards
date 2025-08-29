@@ -1,4 +1,3 @@
-
 // Minimal flashcards logic + persistence. Expand with TODOs 
 const DEFAULTS = {decks: [
   {id:'deck1', title:'Spanish Basics', cards:[
@@ -26,13 +25,27 @@ function renderDecks(){
 }
 let currentDeck = null, currentCardIndex = 0, showingFront = true;
 
+// Variables to track progress
+let totalCards = 1;
+
+// Update progress bar and text
+function updateProgress() {
+  const progressBar = document.getElementById('progressBar');
+  const progressText = document.getElementById('progressText');
+  progressBar.value = currentCardIndex + 1;
+  progressBar.max = totalCards;
+  progressText.textContent = `Card ${currentCardIndex + 1} of ${totalCards}`;
+}
+
 function openDeck(id){
   currentDeck = data.decks.find(x=>x.id===id);
   deckTitle.textContent = currentDeck.title;
   cardView.style.display = '';
   deckList.parentElement.style.display = 'none';
   currentCardIndex = 0; showingFront = true;
+  totalCards = currentDeck.cards.length;
   renderCard();
+  updateProgress();
 }
 
 function renderCard(){
@@ -46,13 +59,13 @@ flashcardEl.onclick = ()=>{ showingFront = !showingFront; renderCard(); }
 document.getElementById('knownBtn').onclick = ()=>{
   const card = currentDeck.cards[currentCardIndex];
   if(card){ card.box = Math.min((card.box||1)+1, 5); card.nextReview = Date.now() + (card.box * 86400000); saveData(data); }
-  currentCardIndex++; showingFront = true; renderCard();
+  nextCard();
 };
 
 document.getElementById('unknownBtn').onclick = ()=>{
   const card = currentDeck.cards[currentCardIndex];
   if(card){ card.box = 1; card.nextReview = Date.now() + 3600000; saveData(data); }
-  currentCardIndex++; showingFront = true; renderCard();
+  nextCard();
 };
 
 document.getElementById('backToDecks').onclick = ()=>{
@@ -67,6 +80,26 @@ document.getElementById('createDeckBtn').onclick = ()=>{
 };
 
 renderDecks();
+
+// Demo data: Add a sample deck and flashcard if none exist
+document.addEventListener('DOMContentLoaded', () => {
+  let decks = JSON.parse(localStorage.getItem('flashcardDecks')) || [];
+  if (decks.length === 0) {
+    decks = [
+      {
+        name: "Demo Deck",
+        cards: [
+          {
+            question: "What is the capital of France?",
+            answer: "Paris"
+          }
+        ]
+      }
+    ];
+    localStorage.setItem('flashcardDecks', JSON.stringify(decks));
+  }
+  renderDecks();
+});
 
 // TODOs for participants:
 // - Create UI to add/edit/delete cards within a deck.
